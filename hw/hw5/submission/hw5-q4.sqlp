@@ -1,0 +1,22 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q4
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- For each ethnic group, return the number of countries where it occurs, as 
+-- well as the total population world-wide of that group.  Hint: you need to
+-- multiply the ethnicity’s percentage with the country’s population.  Use
+-- the functions float(x) and/or int(x) to convert a string to a float or to an
+-- int. Name your output attributes ethnic_group, num_countries,
+-- total_population. You can leave your final total_population as a float if you
+-- like.
+
+USE hw5;
+SELECT u.`#text` AS ethnic_group, 
+	count(u.`#text`) AS num_countries, 
+	sum(float(y.population) * float(u.`-percentage`)/100) AS total_population
+FROM world x, x.mondial.country y,
+	(CASE WHEN y.ethnicgroups is missing THEN [ ]
+	WHEN is_array(y.ethnicgroups) THEN y.ethnicgroups 
+	ELSE [y.ethnicgroups] END) AS u
+GROUP BY u.`#text`;

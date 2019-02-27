@@ -1,0 +1,23 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q5
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- Compute the list of all mountains, their heights, and the countries where
+-- they are located.  Here you will join the "mountain" collection with the 
+-- "country" collection, on the country code.  You should return a list
+-- consisting of the mountain name, its height, the country code, and country
+-- name, in descending order of the height. Name your output attributes
+-- mountain, height, country_code, country_name.
+
+USE hw5;
+SELECT	y.name AS mountain, 
+	y.`height` AS height, 
+	z.`-car_code` AS country_code, 
+	z.name AS country_name
+FROM world x,
+	 x.mondial.mountain y,
+	 split(y.`-country`, " ") c,
+	 x.mondial.country z
+WHERE z.`-car_code` = c
+ORDER BY int(y.`height`) DESC;

@@ -1,0 +1,6 @@
+T1(p) = person_living(p) JOIN[p=name] male(name)
+T2(p) = Project[p](T1)
+T3(p1,p2,name) = parent_child(p1,p2) JOIN[p1=name] female(name)
+T4(p2) = Project[p2](T3)
+T5(p) = Rename[p] T4(p2)
+T6(p) = T2(p) Difference T5(p)

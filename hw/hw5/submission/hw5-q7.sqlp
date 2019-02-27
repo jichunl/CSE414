@@ -1,0 +1,22 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q7
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- Find all countries bordering two or more seas.  Here you need to join the
+-- "sea" collection with the "country" collection.  For each country in your
+-- list, return its code, its name, and the list of bordering seas, in
+-- decreasing order of the number of seas. Name your output attributes
+-- country_code, country_name, seas.  The attribute seas should be a list of
+-- objects, each with the attribute sea.
+
+USE hw5;
+SELECT z.`-car_code` AS country_code, z.name AS country_name, g AS Grp
+FROM world x, x.mondial.country z
+LET g = (SELECT s.name AS sea
+	FROM x.mondial.sea s, 
+	split(s.`-country`, " ") c 
+	WHERE z.`-car_code` = c
+	GROUP BY s.name)
+WHERE coll_count(g) >= 2
+ORDER BY coll_count(g) DESC;

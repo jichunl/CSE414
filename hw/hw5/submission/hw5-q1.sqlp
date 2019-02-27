@@ -1,0 +1,14 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q1
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- Retrieve all the names of all cities located in Peru, sorted alphabetically.
+-- Name your output attribute city.
+
+USE hw5;
+SELECT u.name AS city
+FROM world x, x.mondial.country y, y.province z,
+	CASE WHEN is_array(z.city) THEN z.city
+	ELSE [z.city] END u
+WHERE y.name = 'Peru';

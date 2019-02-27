@@ -1,0 +1,24 @@
+SELECT table_5.p1, MAX(table_5.y) AS z
+FROM	(
+	SELECT table_3.p1, table_3.y
+	FROM	(
+		SELECT 	table_1.p1 AS p1, 
+			table_2.p3 AS p3, 
+			COUNT(*) AS y
+		FROM	(
+			SELECT *
+			FROM	(	
+				SELECT *
+				FROM person_living PL, parent_child PC1
+				WHERE PL.x = PC1.p1
+			) AS table_1, (
+				SELECT PC2.p1 AS p3, PC2.p2 AS p3
+				FROM parent_child PC2
+			) AS table_2
+			WHERE table_1.p2 = table_2.p3
+		) AS table_3
+		GROUP BY table_3.p1, table_3.p3
+	) AS table_4
+) AS table_5
+GROUP BY table_5.p1
+ 

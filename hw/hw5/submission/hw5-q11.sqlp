@@ -1,0 +1,22 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q11
+-- Name: Jichun Li
+-- ID:	1531264
+
+USE hw5index;
+SELECT DISTINCT u1.country as first_country, u2.country as second_country
+FROM 
+	(SELECT DISTINCT m.name as mountain, s.name as sea, c.name as country
+	FROM mountain m, country c, sea s,
+	     split(m.`-country`, ' ') as m_c,
+	     split(s.`-country`, ' ') as s_c
+	WHERE m_c = c.`-car_code` AND s_c = c.`-car_code`) AS u1,
+	(SELECT DISTINCT m.name as mountain, s.name as sea, c.name as country
+	FROM mountain m, country c,sea s,
+	     split(m.`-country`, ' ') as m_c,
+	     split(s.`-country`, ' ') as s_c
+	WHERE m_c = c.`-car_code` AND s_c = c.`-car_code`) AS u2
+WHERE u1.country < u2.country
+AND u1.mountain = u2.mountain
+AND u1.sea = u2.sea;
+-- 1.106 sec

@@ -1,0 +1,8 @@
+create user_name user_password 1000
+login user_name user_password
+quit
+*
+Created user user_name
+Logged in as user1
+Goodbye
+*

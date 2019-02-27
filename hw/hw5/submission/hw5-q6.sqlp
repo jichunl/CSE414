@@ -1,0 +1,24 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q6
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- Compute a list of countries with all their mountains.  This is similar to the
+-- previous problem, but now you will group the mountains for each country;
+-- return both the mountain name and its height.   Your query should return a
+-- list where each element consists of the country code, country name, and a
+-- list of mountain names and heights; order the countries by the number of
+-- mountains they contain, in descending order. Name your output attributes
+-- country_code, country_name, mountains. The attribute mountains should be a
+-- list of objects, each with the attributes mountain and height.
+
+USE hw5;
+SELECT z.`-car_code` AS country_code, z.name AS country_name, g AS Grp
+FROM world x, x.mondial.country z
+LET g = (SELECT m.name AS mountain, m.height AS mountain_height
+	FROM x.mondial.mountain m, 
+	split(m.`-country`, " ") c 
+	WHERE z.`-car_code` = c
+	GROUP BY m.name, m.height)
+ORDER BY coll_count(g) DESC;
+

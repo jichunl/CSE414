@@ -1,0 +1,6 @@
+create user1 code1
+quit
+*
+Created user user1
+Goodbye
+*

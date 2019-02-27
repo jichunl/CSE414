@@ -1,0 +1,17 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q2
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- For each country return its name, its population, and the number of 
+-- religions, sorted alphabetically by country. Report 0 religions for
+-- countries without religions. Name your output attributes country, population
+-- , num_religions.
+
+USE hw5;
+SELECT count(r) AS num_religions,  y.name AS country, y.population
+FROM world x, x.mondial.country y,
+	CASE WHEN is_array(y.reigions) THEN y.religions
+	ELSE [y.religions] END r
+GROUP BY y.name, y.population
+ORDER BY y.name ASC; 

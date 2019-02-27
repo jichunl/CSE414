@@ -1,0 +1,28 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q12
+-- Name: Jichun Li
+-- ID:	1531264
+
+USE hw5index;
+WITH u AS (SELECT c1 AS country_code,c.name AS cname, m.name AS mountain, s.name AS sea
+	   FROM mountain AS m, country AS c, sea AS s,
+	   split(m.`-country`, ' ') AS c1,
+	   split(s.`-country`, ' ') AS c2
+	   WHERE c1 = c.`-car_code` AND c2 = c.`-car_code`)
+SELECT DISTINCT u1.cname AS first_country, u2.cname AS second_country,g AS mountains, h AS seas
+FROM u AS u1, u AS u2
+LET g = (SELECT m_grp.name AS mountain
+	FROM mountain AS m_grp,
+	split(m_grp.`-country`, ' ') AS m_c1,
+	split(m_grp.`-country`, ' ') AS m_c2
+	WHERE m_c1 = u1.country_code
+	AND m_c2 = u2.country_code),
+    h = (SELECT s_grp.name AS sea
+	FROM sea As s_grp,
+	split(s_grp.`-country`, ' ') AS s_c1,
+	split(s_grp.`-country`, ' ') AS s_c2
+	WHERE s_c1 = u1.country_code
+	AND s_c2 = u2.country_code)
+WHERE u1.cname < u2.cname
+AND u1.mountain = u2.mountain
+AND u1.sea = u2.sea;

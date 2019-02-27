@@ -1,0 +1,19 @@
+-- CSE 414 	Autumn 2018
+-- Homework5 - Q3
+-- Name: Jichun Li
+-- ID:	1531264
+
+-- For each religion return the number of countries where it occurs; order them
+-- in decreasing number of countries. Name your output attributes religion, 
+-- num_countries.
+
+USE hw5;
+SELECT z.`#text` AS religion, COUNT(*) AS num_countries
+FROM world AS x, x.mondial.country AS y,
+	(CASE WHEN y.religion IS MISSING
+		THEN []
+		WHEN is_array(y.religions)
+		THEN y.religions
+		ELSE [y.religions] END) AS z
+GROUP BY z.`#text`
+ORDER BY COUNT(*) DESC;
